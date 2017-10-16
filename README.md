@@ -8,3 +8,16 @@
 </p>
 
 如果感觉对您有帮助，欢迎给我加一个星星，或者fork。
+
+为了避免大家浪费精力，免费代理经验证无实用价值的代理网站列举如下，是为“黑名单”：</br>
+-   http://www.ip181.com/
+-   http://www.3366ip.net/
+-   http://www.proxy360.cn/Proxy
+-   https://list.proxylistplus.com/Fresh-HTTP-Proxy-List-1
+<p>高匿可用率长期为0。另外有些代理爬虫里面的网站根本打不开的就不列在这里。</br>
+黑名单更新日期：2017-10-16</p>
+
+<p>低可用率免费代理站名单：</br>
+-  http://www.xicidaili.com/nn    百度排名靠前，可用率仅1%左右。
+
+</p>
