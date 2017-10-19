@@ -13,12 +13,9 @@
 -   http://www.ip181.com/
 -   http://www.3366ip.net/
 -   http://www.proxy360.cn/Proxy
--   https://list.proxylistplus.com/Fresh-HTTP-Proxy-List-1
-<p>高匿可用率长期为0。另外有些代理爬虫里面的网站根本打不开的就不列在这里。</br>
-黑名单更新日期：2017-10-16</p>
-
-<p>低可用率/可用数的免费代理站名单：</br>
-+   http://www.xicidaili.com/nn    百度排名靠前，可用率仅1%左右。
-+   http://www.kuaidaili.com/free/inha  教新的只有前5页，但可用仅1--2个。
-+   http://bugng.com/gngn          可用量<5。
-更新日期：2017-10-19</p>
+-   https://list.proxylistplus.com/
+*   http://www.xicidaili.com/nn    百度排名靠前，可用率仅1%左右。
+*   http://www.kuaidaili.com/free/inha  较新的只有前5页，但可用仅1--2个。
+*   http://bugng.com/gngn          可用量<5
+</br>更新日期：2017-10-19</br>
+另外github上有些爬虫里面的代理网站根本打不开，就不列在这里。
