@@ -50,8 +50,7 @@ class Proxy_Spider(object):
         print('已采集seoFF，代理池IP总数：', len(self.proxies_got))
 
     def __get_code_busy(self):
-        urls = ['https://proxy.coderbusy.com/zh-cn/classical/anonymous-type/highanonymous/'
-                'p{}.aspx'.format(str(i)) for i in range(1, 12)]
+        urls = ['https://proxy.coderbusy.com/classical/anonymous-type/highanonymous.aspx?page={}'.format(str(i)) for i in range(1, 12)]
         for url in urls:
             for info in self.__rows_from(url):
                 item = info.select('td')
