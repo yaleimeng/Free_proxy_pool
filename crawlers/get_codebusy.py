@@ -7,8 +7,7 @@
 from proxy import requestPage,write_file,verify_Proxies
 
 def get_All66():
-      urls = ['https://proxy.coderbusy.com/zh-cn/classical/anonymous-type/highanonymous/'
-              'p{}.aspx'.format(str(i)) for i in range(1,12)]
+      urls = ['proxy.coderbusy.com/'.format(str(i)) for i in range(1,12)]
       output = set()
       for url in urls:
           soup = requestPage(url, wait=3)
