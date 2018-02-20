@@ -10,14 +10,11 @@
 + lxml
 + chardet
 
-如果感觉对您有帮助，欢迎给我加一个星星，或者fork。
+如果感觉对您有帮助，欢迎给我加一个星星，或者fork。</br>
 为了避免大家浪费精力，经验证无实用价值的免费代理网站列举如下，是为“黑名单”：</br>
 -   http://www.ip181.com/
--   http://www.3366ip.net/
--   http://www.proxy360.cn/Proxy
 -   https://list.proxylistplus.com/
 *   http://www.xicidaili.com/nn    百度排名靠前，可用率仅1%左右。
 *   http://www.kuaidaili.com/free/inha  较新的只有前5页，但可用仅1--2个。
-*   http://bugng.com/gngn          可用量<5
-</br>更新日期：2017-10-19</br>
+*   更新日期：2018-2-20</br>
 另外github上有些爬虫里面的代理网站根本打不开，就不列在这里。
