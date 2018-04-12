@@ -111,22 +111,15 @@ class Proxy_Spider(object):
             link = 'http://www.ajshw.net' + info.get('href')[2:]  # href开头有两个点..，要去掉。
             page_list.append(link)
 
-        def get_txt(cipher):  # 邮箱混淆解密函数。
-            begin, out = cipher[:2], ''
-            for n in range(4, len(cipher) + 1, 2):
-                r = int(begin, 16) ^ int(cipher[n - 2:n], 16)
-                if 57 < r:  break  # 这样后面第一次遇到@时就结束循环，返回结果。
-                out += chr(r)
-            return out
+        for info in soup.select('dd.listBox5')[1].select('a')[:3]:  # 国外代理最新的3篇文章。
+            link = 'http://www.ajshw.net' + info.get('href')[2:]  # href开头有两个点..，要去掉。
+            page_list.append(link)
 
-        ip_exp = re.compile('\d+\.\w+\.\w+\.\w+:')
+        ip_exp = re.compile('\d+\.\w+\.\w+\.\w+:\d+')
         for page in page_list:
             soup, ports = self.request_page(page), []
             address = soup.select('div#newsContent p')[0]
             ips = ip_exp.findall(address.text)
-            for pot in self.__rows_from(page, 'div#newsContent p a'):
-                ports.append(get_txt(pot['data-cfemail']))
-            proxies = [a + b for a, b in zip(ips, ports)]  # 要确保ip与端口一一对应。
-            self.proxies_got.update(proxies)
+            self.proxies_got.update(ips)
             print('已采集ajshw，代理池IP总数：', len(self.proxies_got))
             time.sleep(0.8)
