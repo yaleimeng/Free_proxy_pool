@@ -22,8 +22,7 @@ class Proxy_Spider(object):
             print('……无法获取网页。', end='\t')
             return None
 
-    def crawl(self):
-        self.__get_seo_FangFa()  # 总量380左右。每分钟更新。
+    def crawl(self):        
         self.__get_code_busy()  # 总量550上下。15到20分钟更新一次。
         self.__get_Ai_Jia()  # 6篇文章总量500多。每小时更新1篇文章。
         # self.__get_All66()     # 数量自定义。抓取到的代理越多，验证用时越长。
@@ -40,14 +39,6 @@ class Proxy_Spider(object):
         express = 'table tbody tr' if exp is None else exp
         soup = self.request_page(url, wait=3)
         return None if soup is None else soup.select(express)
-
-    def __get_seo_FangFa(self):
-        for info in self.__rows_from('http://ip.seofangfa.com/'):
-            item = info.select('td')
-            address = item[0].text + ':' + item[1].text
-            if address not in self.proxies_got:
-                self.proxies_got.add(address)
-        print('已采集seoFF，代理池IP总数：', len(self.proxies_got))
 
     def __get_code_busy(self):
         urls = ['https://proxy.coderbusy.com/classical/anonymous-type/highanonymous.aspx?page={}'.format(str(i)) for i in range(1, 12)]
