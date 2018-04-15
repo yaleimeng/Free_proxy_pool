@@ -24,15 +24,14 @@ class Proxy_Spider(object):
 
     def crawl(self):        
         self.__get_code_busy()  # 总量550上下。15到20分钟更新一次。
-        self.__get_Ai_Jia()  # 6篇文章总量500多。每小时更新1篇文章。
-        # self.__get_All66()     # 数量自定义。抓取到的代理越多，验证用时越长。
-        # self.__get_All89()     # 考虑验证耗时因素，后面几个可以选择性启用。
-        # self.__get_kai_xin()   # 每小时更新一篇文章，100个代理。
+        self.__get_Ai_Jia()    # 9篇文章总量1500多。每小时更新1篇文章。
+        self.__get_All66()     # 数量自定义。抓取到的代理越多，验证用时越长。
+        self.__get_All89()     # 考虑验证耗时因素，后面几个可以选择性启用。
         return self.proxies_got
 
     def crawl_for_init(self):
         self.__get_code_busy()  # 更新很频繁，适合初次启动时更新一下。
-        self.__xiao_hexia()  # 更新频繁，但可用率低。启动采集
+        # self.__xiao_hexia()  # 更新频繁，但可用率低。启动采集
         self.__xiao_shu()    # 每天更新2篇文章。只适合一次性采集
         self.__get_qq_room()  # 该站每天更新多次。差不多2小时一篇
         return self.proxies_got
@@ -95,18 +94,6 @@ class Proxy_Spider(object):
         for page in page_list[:2]:  # 只收集包含"代理ip"的前2篇文章
             self.proxies_got.update(self.__parse_by_re(page, ip_exp))
             print('已采集QQ_room，代理池IP总数：', len(self.proxies_got))
-            time.sleep(0.5)
-
-    def __get_kai_xin(self):
-        page_list = []
-        soup = self.request_page('http://www.kxdaili.com/daili.html')
-        news = soup.select('div.clear_div > div.ui a')[:9:2]  # 获取最新的5篇文章。
-        for info in news:
-            link = 'http://www.kxdaili.com' + info.get('href')
-            page_list.append(link)
-        for page in page_list:
-            self.proxies_got.update(self.__parse_by_re(page))
-            print('已采集开心代理，代理池IP总数：', len(self.proxies_got))
             time.sleep(0.5)
 
     def __xiao_shu(self):
