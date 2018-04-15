@@ -32,7 +32,9 @@ class Proxy_Spider(object):
 
     def crawl_for_init(self):
         self.__get_code_busy()  # 更新很频繁，适合初次启动时更新一下。
-        self.__get_qq_room()  # 该站每天更新一次，只适合在第一次启动时更新。不需要反复运行
+        self.__xiao_hexia()  # 更新频繁，但可用率低。启动采集
+        self.__xiao_shu()    # 每天更新2篇文章。只适合一次性采集
+        self.__get_qq_room()  # 该站每天更新多次。差不多2小时一篇
         return self.proxies_got
 
     def __rows_from(self, url, exp=None):  # 从网页表格中提取，seo方法、codeBusy采用了这种方式。
@@ -40,6 +42,18 @@ class Proxy_Spider(object):
         soup = self.request_page(url, wait=3)
         return None if soup is None else soup.select(express)
 
+    def __xiao_hexia(self):
+        pages = ['http://www.xiaohexia.cn/index.php?page={}'.format(str(i)) for i in range(1, 4)]
+        for page in pages:
+            rows = self.request_page(page, wait=3).find_all('tr')
+            for info in rows[1:]:
+                item = info.select('td')
+                address = item[0].text + ':' + item[1].text
+                if address not in self.proxies_got:
+                    self.proxies_got.add(address)
+            print('已采集小河虾，代理池IP总数：', len(self.proxies_got))
+            
+            
     def __get_code_busy(self):
         urls = ['https://proxy.coderbusy.com/classical/anonymous-type/highanonymous.aspx?page={}'.format(str(i)) for i in range(1, 12)]
         for url in urls:
@@ -81,7 +95,7 @@ class Proxy_Spider(object):
         for page in page_list[:2]:  # 只收集包含"代理ip"的前2篇文章
             self.proxies_got.update(self.__parse_by_re(page, ip_exp))
             print('已采集QQ_room，代理池IP总数：', len(self.proxies_got))
-            time.sleep(0.8)
+            time.sleep(0.5)
 
     def __get_kai_xin(self):
         page_list = []
@@ -93,8 +107,20 @@ class Proxy_Spider(object):
         for page in page_list:
             self.proxies_got.update(self.__parse_by_re(page))
             print('已采集开心代理，代理池IP总数：', len(self.proxies_got))
-            time.sleep(0.8)
+            time.sleep(0.5)
 
+    def __xiao_shu(self):
+        page_list = []
+        soup = self.request_page('http://www.xsdaili.com/')
+        news = soup.select('div.title a')[:6]  # 获取最新的4篇文章。
+        for info in news:
+            link = 'http://www.xsdaili.com' + info.get('href')
+            page_list.append(link)
+        for page in page_list:
+            self.proxies_got.update(self.__parse_by_re(page))
+            print('已采集小舒代理，代理池IP总数：', len(self.proxies_got))
+            time.sleep(0.5)      
+            
     def __get_Ai_Jia(self):  # 爱家网，每小时更新国内国外代理IP。可用率不成。
         page_list = []
         soup = self.request_page('http://www.ajshw.net/news/?list_9.html')
@@ -106,11 +132,7 @@ class Proxy_Spider(object):
             link = 'http://www.ajshw.net' + info.get('href')[2:]  # href开头有两个点..，要去掉。
             page_list.append(link)
 
-        ip_exp = re.compile('\d+\.\w+\.\w+\.\w+:\d+')
         for page in page_list:
-            soup, ports = self.request_page(page), []
-            address = soup.select('div#newsContent p')[0]
-            ips = ip_exp.findall(address.text)
-            self.proxies_got.update(ips)
-            print('已采集ajshw，代理池IP总数：', len(self.proxies_got))
-            time.sleep(0.8)
+            self.proxies_got.update(self.__parse_by_re(page))
+            print('已采集ajshw代理，代理池IP总数：', len(self.proxies_got))
+            time.sleep(0.5)
