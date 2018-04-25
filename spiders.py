@@ -50,8 +50,17 @@ class Proxy_Spider(object):
                 address = item[0].text + ':' + item[1].text
                 if address not in self.proxies_got:
                     self.proxies_got.add(address)
-            print('已采集小河虾，代理池IP总数：', len(self.proxies_got))
+        print('已采集小河虾，代理池IP总数：', len(self.proxies_got))
             
+    def __ihuan(self):
+        urls = ['https://ip.ihuan.me/?page={}&anonymity=2'.format(str(i)) for i in range(1, 31)]
+        for url in urls:
+            for info in self.__rows_from(url):
+                item = info.select('td')
+                address = item[0].text + ':' + item[1].text
+                if address not in self.proxies_got:
+                    self.proxies_got.add(address)
+            print('已采集小幻代理，代理池IP总数：', len(self.proxies_got))   
             
     def __get_code_busy(self):
         urls = ['https://proxy.coderbusy.com/classical/anonymous-type/highanonymous.aspx?page={}'.format(str(i)) for i in range(1, 12)]
