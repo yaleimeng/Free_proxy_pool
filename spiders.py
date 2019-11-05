@@ -23,17 +23,18 @@ class Proxy_Spider(object):
             return None
 
     def crawl(self):        
-        self.__get_code_busy()  # 总量550上下。15到20分钟更新一次。
-        self.__get_Ai_Jia()    # 9篇文章总量1500多。每小时更新1篇文章。
+        self.__get_code_busy()  # 总量550上下。15到20分钟更新一次。        
         self.__get_All66()     # 数量自定义。抓取到的代理越多，验证用时越长。
         self.__get_All89()     # 考虑验证耗时因素，后面几个可以选择性启用。
         return self.proxies_got
 
     def crawl_for_init(self):
-        self.__get_code_busy()  # 更新很频繁，适合初次启动时更新一下。
+        self.__get_Ai_Jia()    # 9篇文章总量1500多。每小时更新1篇文章。
+        self.__xiao_shu()      # 每天更新2篇文章。只适合一次性采集
+        #self.__get_code_busy()  # 更新很频繁，适合初次启动时更新一下。
+        # self.__ihuan() 站点压力大，不要频繁抓取。
         # self.__xiao_hexia()  # 更新频繁，但可用率低。启动采集
-        self.__xiao_shu()    # 每天更新2篇文章。只适合一次性采集
-        self.__get_qq_room()  # 该站每天更新多次。差不多2小时一篇
+       
         return self.proxies_got
 
     def __rows_from(self, url, exp=None):  # 从网页表格中提取，seo方法、codeBusy采用了这种方式。
@@ -91,19 +92,6 @@ class Proxy_Spider(object):
         find_out = self.__parse_by_re(url)
         self.proxies_got.update(find_out)
         print('已采集89ip.cn，代理池IP总数：', len(self.proxies_got))
-
-    def __get_qq_room(self):
-        page_list, output = [], set()
-        host = 'http://ip.qqroom.cn/'
-        news = self.request_page(host).select('section.article-list h2 a')  # 标题必须包含‘代理ip’
-        for info in news:
-            if info.text.__contains__('代理ip'):
-                page_list.append(host + info.get('href'))
-        ip_exp = re.compile('\d+\.\d+\.\d+\.\d+:\d+')  # 文字描述太多。不能使用\w代替。
-        for page in page_list[:2]:  # 只收集包含"代理ip"的前2篇文章
-            self.proxies_got.update(self.__parse_by_re(page, ip_exp))
-            print('已采集QQ_room，代理池IP总数：', len(self.proxies_got))
-            time.sleep(0.5)
 
     def __xiao_shu(self):
         page_list = []
