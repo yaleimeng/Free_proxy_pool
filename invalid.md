@@ -4,5 +4,7 @@
 + http://www.proxy360.cn/Proxy
 + http://bugng.com/gngn
 + http://ip.seofangfa.com/
-+ http://www.kxdaili.com/daili.html
 + http://www.yun-daili.com/
++ http://www.xiaohexia.cn/
++ https://proxy.coderbusy.com/classical/anonymous-type/highanonymous.aspx?
++ http://www.ajshw.net/news/?list_9.html
