@@ -94,7 +94,7 @@ class Proxy_Spider(object):
             print('已采集zhima代理，代理池IP总数：', len(self.proxies_got))
             time.sleep(0.5)
 
-       def __kaixin(self):
+    def __kaixin(self):
         #  开心代理，每天更新一篇国内代理IP。 div.cont_list > ul > li:nth-child(1) > a.title
         page_list = []
         soup = self.request_page('http://www.kxdaili.com/daili.html')
