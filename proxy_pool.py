@@ -66,17 +66,19 @@ class Free_proxy_pool(object):
         output = []
         #print('待验证代理总数：%d\n' % len(pro_set))
         for one_p in pro_set:
-            pro = {'http': 'http://' + one_p, }
+            pro = {'http': 'http://' + one_p, }            
+            # 因为代理匿名性验证比较麻烦，取消验证直接收集
             try:
-                soup = self.__spider.request_page('http://ip.chinaz.com/', pro)
-                if soup is None:         continue
-                ip = soup.select('p.getlist')[0].text.split('：')[1][:-6]
-                if ip == one_p.split(':')[0] and one_p not in output:
-                    output.append(one_p)  # 把代理加入到.proxies_ok中去。
-                    print('当前代理：%s是高匿类型！已收集总数：%d' % (one_p, len(output)))
-            except Exception as ex:pass
-                #print('……解析失败……', end='\t')
-        #print('验证完毕！高匿HTTP代理总数：%d\n' % len(output))
+               soup = self.__spider.request_page('http://ip111.cn/', pro)
+               if soup is None:         continue
+               output.append(one_p)  # 把代理加入到.proxies_ok中去。
+            #    ip = soup.select('p.getlist')[0].text.split('：')[1][:-6]
+            #    if ip == one_p.split(':')[0] and one_p not in output:
+            #        output.append(one_p)  # 把代理加入到.proxies_ok中去。
+            #        print('当前代理：%s是高匿类型！已收集总数：%d' % (one_p, len(output)))
+            # except Exception as ex:pass
+            #    #print('……解析失败……', end='\t')
+        print('验证完毕！HTTP代理总数：%d\n' % len(output))
         return output
 
     def update_all(self):  # 深度更新函数。
